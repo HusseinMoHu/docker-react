@@ -1,11 +1,31 @@
 sudo: required
 language: generic
 
+# install docker
 services:
   - docker
 
+# build image
 before_install:
   - docker build -t husseinmohu/docker-react -f Dockerfile.dev .
 
+# Continues integration - create container for run tests
 script:
   - docker run -e CI=true husseinmohu/docker-react npm run test
+
+# Continues deployment - on aws
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1" # From Elastic beanstalk URL
+  app: "docker-react-app" # your app name in aws
+  env: "docker-env" # get that name from your app dashboard on aws
+  bucket_name: "elasticbeanstalk-us-east-1-923445559289" # created automatic in S3-service after you create your app
+  bucket_path: "docker-react-app" # inside the above bucket name. it's often the same as app name
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY # tell travis to get this value from env-variables
+  secret_access_key: $AWS_SECRET_KEY # tell travis to get this value from env-variables
+  ### Note:
+  # go to aws IAM-service and create new user then give him permission -> full access to elastic-beanstalk
+  # it will generate {AWS_ACCESS_KEY, AWS_SECRET_KEY} added them manually at Travis-ci env-variables
+  # now we have CI/CD via Travis-ci
