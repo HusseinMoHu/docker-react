@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # - /usr/src/app  # incase need to bookmark node_modules if it's not exist in local machine
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+    command: ["npm", "run", "test"] # to override CMD ["npm", start] in Dockerfile.dev
