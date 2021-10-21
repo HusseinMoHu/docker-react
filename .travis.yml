@@ -25,7 +25,12 @@ deploy:
     branch: master
   access_key_id: $AWS_ACCESS_KEY # tell travis to get this value from env-variables
   secret_access_key: $AWS_SECRET_KEY # tell travis to get this value from env-variables
-  ### Note:
+  ### Note(1):
   # go to aws IAM-service and create new user then give him permission -> full access to elastic-beanstalk
   # it will generate {AWS_ACCESS_KEY, AWS_SECRET_KEY} added them manually at Travis-ci env-variables
   # now we have CI/CD via Travis-ci
+
+  ### Note(2):
+  # Create the Elastic Beanstalk environment with Docker running on 64bit Amazon Linux
+  # instead of Docker running on 64bit Amazon Linux 2.
+  # this will ensure that our container is built using the Dockerfile and not the compose file
