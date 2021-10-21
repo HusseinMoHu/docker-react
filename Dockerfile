@@ -12,4 +12,5 @@ RUN npm run build
 # then command <start nginx> server which is the default command
 # so we don't need to write it
 FROM nginx
+EXPOSE 80
 COPY --from=build-stage /app/build /usr/share/nginx/html

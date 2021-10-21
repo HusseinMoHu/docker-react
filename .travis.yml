@@ -13,7 +13,7 @@ before_install:
 script:
   - docker run -e CI=true husseinmohu/docker-react npm run test
 
-# Continues deployment - on aws
+# Continues deployment on aws - deploying from => Dockerfile
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1" # From Elastic beanstalk URL
